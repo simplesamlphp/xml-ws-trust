@@ -1,0 +1,4 @@
+<trust:Status xmlns:trust="http://docs.oasis-open.org/ws-sx/ws-trust/200512/">
+  <trust:Code>http://docs.oasis-open.org/ws-sx/ws-trust/200512/status/invalid</trust:Code>
+  <trust:Reason>phpunit</trust:Reason>
+</trust:Status>

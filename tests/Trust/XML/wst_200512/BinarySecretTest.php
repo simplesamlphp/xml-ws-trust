@@ -1,0 +1,73 @@
+<?php
+
+declare(strict_types=1);
+
+namespace SimpleSAML\Test\WebServices\Trust\XML\wst_200512;
+
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\TestCase;
+use SimpleSAML\Test\WebServices\Trust\Constants as C;
+use SimpleSAML\WebServices\Trust\XML\wst_200512\AbstractBinarySecretType;
+use SimpleSAML\WebServices\Trust\XML\wst_200512\AbstractWstElement;
+use SimpleSAML\WebServices\Trust\XML\wst_200512\BinarySecret;
+use SimpleSAML\WebServices\Trust\XML\wst_200512\BinarySecretTypeEnum;
+use SimpleSAML\XML\Attribute as XMLAttribute;
+use SimpleSAML\XML\DOMDocumentFactory;
+use SimpleSAML\XML\TestUtils\SchemaValidationTestTrait;
+use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
+use SimpleSAML\XMLSchema\Type\AnyURIValue;
+use SimpleSAML\XMLSchema\Type\Base64BinaryValue;
+use SimpleSAML\XMLSchema\Type\StringValue;
+
+use function dirname;
+
+/**
+ * Class \SimpleSAML\WebServices\Trust\XML\wst_200512\BinarySecretTest
+ *
+ * @package simplesamlphp/xml-ws-trust
+ */
+#[Group('wst')]
+#[CoversClass(BinarySecret::class)]
+#[CoversClass(AbstractBinarySecretType::class)]
+#[CoversClass(AbstractWstElement::class)]
+final class BinarySecretTest extends TestCase
+{
+    use SchemaValidationTestTrait;
+    use SerializableElementTestTrait;
+
+
+    /**
+     */
+    public static function setUpBeforeClass(): void
+    {
+        self::$testedClass = BinarySecret::class;
+
+        self::$xmlRepresentation = DOMDocumentFactory::fromFile(
+            dirname(__FILE__, 4) . '/resources/xml/wst/200512/BinarySecret.xml',
+        );
+    }
+
+
+    // test marshalling
+
+
+    /**
+     * Test creating a BinarySecret object from scratch.
+     */
+    public function testMarshalling(): void
+    {
+        $attr1 = new XMLAttribute(C::NAMESPACE, 'ssp', 'attr1', StringValue::fromString('testval1'));
+
+        $binarySecret = new BinarySecret(
+            Base64BinaryValue::fromString('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI='),
+            AnyURIValue::fromString(BinarySecretTypeEnum::Nonce->value),
+            [$attr1],
+        );
+
+        $this->assertEquals(
+            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
+            strval($binarySecret),
+        );
+    }
+}

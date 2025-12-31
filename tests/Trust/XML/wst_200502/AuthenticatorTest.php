@@ -1,0 +1,88 @@
+<?php
+
+declare(strict_types=1);
+
+namespace SimpleSAML\Test\WebServices\Trust\XML\wst_200502;
+
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\TestCase;
+use SimpleSAML\SOAP11\Type\MustUnderstandValue;
+use SimpleSAML\WebServices\Addressing\XML\wsa_200408\MessageID;
+use SimpleSAML\WebServices\Trust\XML\wst_200502\AbstractAuthenticatorType;
+use SimpleSAML\WebServices\Trust\XML\wst_200502\AbstractWstElement;
+use SimpleSAML\WebServices\Trust\XML\wst_200502\Authenticator;
+use SimpleSAML\WebServices\Trust\XML\wst_200502\CombinedHash;
+use SimpleSAML\XML\DOMDocumentFactory;
+use SimpleSAML\XML\TestUtils\SchemaValidationTestTrait;
+use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
+use SimpleSAML\XMLSchema\Type\AnyURIValue;
+use SimpleSAML\XMLSchema\Type\Base64BinaryValue;
+
+use function dirname;
+
+/**
+ * Class \SimpleSAML\WebServices\Trust\XML\wst_200502\AuthenticatorTest
+ *
+ * @package simplesamlphp/xml-ws-trust
+ */
+#[Group('wst')]
+#[CoversClass(Authenticator::class)]
+#[CoversClass(AbstractAuthenticatorType::class)]
+#[CoversClass(AbstractWstElement::class)]
+final class AuthenticatorTest extends TestCase
+{
+    use SchemaValidationTestTrait;
+    use SerializableElementTestTrait;
+
+
+    /**
+     */
+    public static function setUpBeforeClass(): void
+    {
+        self::$schemaFile = dirname(__FILE__, 5) . '/resources/schemas/ws-trust-200502.xsd';
+
+        self::$testedClass = Authenticator::class;
+
+        self::$xmlRepresentation = DOMDocumentFactory::fromFile(
+            dirname(__FILE__, 4) . '/resources/xml/wst/200502/Authenticator.xml',
+        );
+    }
+
+
+    // test marshalling
+
+
+    /**
+     * Test creating a Authenticator object from scratch.
+     */
+    public function testMarshalling(): void
+    {
+        $mustUnderstand = MustUnderstandValue::fromBoolean(true);
+        $msgId = new MessageID(
+            AnyURIValue::fromString('uuid:d0ccf3cd-2dce-4c1a-a5d6-be8912ecd7de'),
+            [$mustUnderstand->toAttribute()],
+        );
+
+        $combinedHash = new CombinedHash(
+            Base64BinaryValue::fromString('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI='),
+        );
+        $authenticator = new Authenticator($combinedHash, [$msgId]);
+
+        $this->assertEquals(
+            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
+            strval($authenticator),
+        );
+    }
+
+
+    /**
+     * Test creating an empty Authenticator object from scratch.
+     */
+    public function testMarshallingEmpty(): void
+    {
+        $authenticator = new Authenticator();
+
+        $this->assertTrue($authenticator->isEmptyElement());
+    }
+}

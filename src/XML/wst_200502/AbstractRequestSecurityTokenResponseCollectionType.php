@@ -1,0 +1,93 @@
+<?php
+
+declare(strict_types=1);
+
+namespace SimpleSAML\WebServices\Trust\XML\wst_200502;
+
+use DOMElement;
+use SimpleSAML\WebServices\Trust\Assert\Assert;
+use SimpleSAML\XML\ExtendableAttributesTrait;
+use SimpleSAML\XMLSchema\Exception\InvalidDOMElementException;
+use SimpleSAML\XMLSchema\Exception\MissingElementException;
+use SimpleSAML\XMLSchema\Exception\SchemaViolationException;
+use SimpleSAML\XMLSchema\XML\Constants\NS;
+
+/**
+ * A RequestSecurityTokenResponseCollectionType element
+ *
+ * @package simplesamlphp/xml-ws-trust
+ */
+abstract class AbstractRequestSecurityTokenResponseCollectionType extends AbstractWstElement
+{
+    use ExtendableAttributesTrait;
+
+
+    public const string XS_ANY_ATTR_NAMESPACE = NS::OTHER;
+
+
+    /**
+     * @param \SimpleSAML\WebServices\Trust\XML\wst_200502\RequestSecurityTokenResponse[] $requestSecurityTokenResponse
+     * @param array<\SimpleSAML\XML\Attribute> $namespacedAttributes
+     */
+    final public function __construct(
+        protected array $requestSecurityTokenResponse,
+        array $namespacedAttributes,
+    ) {
+        Assert::minCount($requestSecurityTokenResponse, 1, MissingElementException::class);
+        Assert::allIsInstanceOf(
+            $requestSecurityTokenResponse,
+            RequestSecurityTokenResponse::class,
+            SchemaViolationException::class,
+        );
+
+        $this->setAttributesNS($namespacedAttributes);
+    }
+
+
+    /**
+     * Get the requestSecurityTokenResponse property.
+     *
+     * @return \SimpleSAML\WebServices\Trust\XML\wst_200502\RequestSecurityTokenResponse[]
+     */
+    public function getRequestSecurityTokenResponse(): array
+    {
+        return $this->requestSecurityTokenResponse;
+    }
+
+
+    /**
+     * Convert XML into a class instance
+     *
+     * @throws \SimpleSAML\XMLSchema\Exception\InvalidDOMElementException
+     *   If the qualified name of the supplied element is wrong
+     */
+    public static function fromXML(DOMElement $xml): static
+    {
+        Assert::same($xml->localName, static::getLocalName(), InvalidDOMElementException::class);
+        Assert::same($xml->namespaceURI, static::NS, InvalidDOMElementException::class);
+
+        return new static(
+            RequestSecurityTokenResponse::getChildrenOfClass($xml),
+            self::getAttributesNSFromXML($xml),
+        );
+    }
+
+
+    /**
+     * Convert this element to XML.
+     */
+    public function toXML(?DOMElement $parent = null): DOMElement
+    {
+        $e = $this->instantiateParentElement($parent);
+
+        foreach ($this->getRequestSecurityTokenResponse() as $r) {
+            $r->toXML($e);
+        }
+
+        foreach ($this->getAttributesNS() as $attr) {
+            $attr->toXML($e);
+        }
+
+        return $e;
+    }
+}
