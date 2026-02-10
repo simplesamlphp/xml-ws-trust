@@ -13,7 +13,6 @@ use SimpleSAML\WebServices\Trust\XML\wst_200502\TokenType;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\SchemaValidationTestTrait;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
-use SimpleSAML\XMLSchema\Type\AnyURIValue;
 
 use function dirname;
 
@@ -53,7 +52,7 @@ final class TokenTypeTest extends TestCase
      */
     public function testMarshalling(): void
     {
-        $tokenType = new TokenType(AnyURIValue::fromString(C::NAMESPACE));
+        $tokenType = TokenType::fromString(C::NAMESPACE);
 
         $this->assertEquals(
             self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),

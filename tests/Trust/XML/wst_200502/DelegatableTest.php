@@ -12,7 +12,6 @@ use SimpleSAML\WebServices\Trust\XML\wst_200502\Delegatable;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\SchemaValidationTestTrait;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
-use SimpleSAML\XMLSchema\Type\BooleanValue;
 
 use function dirname;
 
@@ -52,7 +51,7 @@ final class DelegatableTest extends TestCase
      */
     public function testMarshalling(): void
     {
-        $delegatable = new Delegatable(BooleanValue::fromBoolean(true));
+        $delegatable = Delegatable::fromString('true');
 
         $this->assertEquals(
             self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),

@@ -13,7 +13,6 @@ use SimpleSAML\WebServices\Trust\XML\wst_200502\EncryptionAlgorithm;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\SchemaValidationTestTrait;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
-use SimpleSAML\XMLSchema\Type\AnyURIValue;
 
 use function dirname;
 
@@ -53,7 +52,7 @@ final class EncryptionAlgorithmTest extends TestCase
      */
     public function testMarshalling(): void
     {
-        $encryptionAlgorithm = new EncryptionAlgorithm(AnyURIValue::fromString(C::NAMESPACE));
+        $encryptionAlgorithm = EncryptionAlgorithm::fromString(C::NAMESPACE);
 
         $this->assertEquals(
             self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),

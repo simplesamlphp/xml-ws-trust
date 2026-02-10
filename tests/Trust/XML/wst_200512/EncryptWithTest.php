@@ -13,7 +13,6 @@ use SimpleSAML\WebServices\Trust\XML\wst_200512\EncryptWith;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\SchemaValidationTestTrait;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
-use SimpleSAML\XMLSchema\Type\AnyURIValue;
 
 use function dirname;
 
@@ -51,7 +50,7 @@ final class EncryptWithTest extends TestCase
      */
     public function testMarshalling(): void
     {
-        $encryptWith = new EncryptWith(AnyURIValue::fromString(C::NAMESPACE));
+        $encryptWith = EncryptWith::fromString(C::NAMESPACE);
 
         $this->assertEquals(
             self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),

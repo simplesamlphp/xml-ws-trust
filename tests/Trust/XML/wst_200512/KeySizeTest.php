@@ -12,7 +12,6 @@ use SimpleSAML\WebServices\Trust\XML\wst_200512\KeySize;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\SchemaValidationTestTrait;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
-use SimpleSAML\XMLSchema\Type\UnsignedIntValue;
 
 use function dirname;
 
@@ -50,7 +49,7 @@ final class KeySizeTest extends TestCase
      */
     public function testMarshalling(): void
     {
-        $keySize = new KeySize(UnsignedIntValue::fromInteger(4096));
+        $keySize = KeySize::fromString('4096');
 
         $this->assertEquals(
             self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),

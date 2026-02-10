@@ -66,7 +66,7 @@ final class SignChallengeResponseTest extends TestCase
             [$mustUnderstand->toAttribute()],
         );
 
-        $challenge = new Challenge(StringValue::fromString('accepted'));
+        $challenge = Challenge::fromString('accepted');
         $attr1 = new XMLAttribute(C::NAMESPACE, 'ssp', 'attr1', StringValue::fromString('testval1'));
 
         $signChallengeResponse = new SignChallengeResponse($challenge, [$msgId], [$attr1]);

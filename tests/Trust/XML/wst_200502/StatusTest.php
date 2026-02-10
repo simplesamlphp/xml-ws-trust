@@ -16,8 +16,6 @@ use SimpleSAML\WebServices\Trust\XML\wst_200502\StatusCodeEnum;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\SchemaValidationTestTrait;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
-use SimpleSAML\XMLSchema\Type\AnyURIValue;
-use SimpleSAML\XMLSchema\Type\StringValue;
 
 use function dirname;
 
@@ -58,8 +56,8 @@ final class StatusTest extends TestCase
      */
     public function testMarshalling(): void
     {
-        $code = new Code(AnyURIValue::fromString(StatusCodeEnum::Invalid->value));
-        $reason = new Reason(StringValue::fromString('phpunit'));
+        $code = Code::fromString(StatusCodeEnum::Invalid->value);
+        $reason = Reason::fromString('phpunit');
         $status = new Status($code, $reason);
 
         $this->assertEquals(

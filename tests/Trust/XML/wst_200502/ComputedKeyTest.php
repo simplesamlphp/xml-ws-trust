@@ -14,7 +14,6 @@ use SimpleSAML\WebServices\Trust\XML\wst_200502\ComputedKeyEnum;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\SchemaValidationTestTrait;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
-use SimpleSAML\XMLSchema\Type\AnyURIValue;
 
 use function dirname;
 
@@ -55,7 +54,7 @@ final class ComputedKeyTest extends TestCase
      */
     public function testMarshalling(): void
     {
-        $computedKey = new ComputedKey(AnyURIValue::fromString(ComputedKeyEnum::PSHA1->value));
+        $computedKey = ComputedKey::fromString(ComputedKeyEnum::PSHA1->value);
 
         $this->assertEquals(
             self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),

@@ -12,7 +12,6 @@ use SimpleSAML\WebServices\Trust\XML\wst_200512\Forwardable;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\SchemaValidationTestTrait;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
-use SimpleSAML\XMLSchema\Type\BooleanValue;
 
 use function dirname;
 
@@ -50,7 +49,7 @@ final class ForwardableTest extends TestCase
      */
     public function testMarshalling(): void
     {
-        $forwardable = new Forwardable(BooleanValue::fromBoolean(true));
+        $forwardable = Forwardable::fromString('true');
 
         $this->assertEquals(
             self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),

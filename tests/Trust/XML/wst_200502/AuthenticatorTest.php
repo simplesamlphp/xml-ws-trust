@@ -17,7 +17,6 @@ use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\SchemaValidationTestTrait;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
 use SimpleSAML\XMLSchema\Type\AnyURIValue;
-use SimpleSAML\XMLSchema\Type\Base64BinaryValue;
 
 use function dirname;
 
@@ -64,9 +63,7 @@ final class AuthenticatorTest extends TestCase
             [$mustUnderstand->toAttribute()],
         );
 
-        $combinedHash = new CombinedHash(
-            Base64BinaryValue::fromString('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI='),
-        );
+        $combinedHash = CombinedHash::fromString('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI=');
         $authenticator = new Authenticator($combinedHash, [$msgId]);
 
         $this->assertEquals(
