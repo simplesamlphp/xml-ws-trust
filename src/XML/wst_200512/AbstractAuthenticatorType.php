@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SimpleSAML\WebServices\Trust\XML\wst_200512;
 
-use DOMElement;
+use Dom;
 use SimpleSAML\WebServices\Trust\Assert\Assert;
 use SimpleSAML\XML\ExtendableElementTrait;
 use SimpleSAML\XMLSchema\Exception\InvalidDOMElementException;
@@ -62,13 +62,10 @@ abstract class AbstractAuthenticatorType extends AbstractWstElement
     /**
      * Create an instance of this object from its XML representation.
      *
-     * @param \DOMElement $xml
-     * @return static
-     *
      * @throws \SimpleSAML\XMLSchema\Exception\InvalidDOMElementException
      *   if the qualified name of the supplied element is wrong
      */
-    public static function fromXML(DOMElement $xml): static
+    public static function fromXML(Dom\Element $xml): static
     {
         Assert::same($xml->localName, static::getLocalName(), InvalidDOMElementException::class);
         Assert::same($xml->namespaceURI, static::NS, InvalidDOMElementException::class);
@@ -85,7 +82,7 @@ abstract class AbstractAuthenticatorType extends AbstractWstElement
     /**
      * Add this AuthenticatorType to an XML element.
      */
-    public function toXML(?DOMElement $parent = null): DOMElement
+    public function toXML(?Dom\Element $parent = null): Dom\Element
     {
         $e = parent::instantiateParentElement($parent);
 

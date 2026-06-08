@@ -54,10 +54,11 @@ final class RenewingTest extends TestCase
     {
         $renewing = new Renewing(BooleanValue::fromBoolean(true), BooleanValue::fromBoolean(false));
 
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($renewing),
-        );
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($renewing);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 
 

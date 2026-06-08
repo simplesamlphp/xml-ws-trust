@@ -51,9 +51,10 @@ final class ForwardableTest extends TestCase
     {
         $forwardable = Forwardable::fromString('true');
 
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($forwardable),
-        );
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($forwardable);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 }

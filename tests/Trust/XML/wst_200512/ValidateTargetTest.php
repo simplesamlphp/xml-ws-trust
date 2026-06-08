@@ -62,9 +62,10 @@ final class ValidateTargetTest extends TestCase
 
         $validateTarget = new ValidateTarget($msgId);
 
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($validateTarget),
-        );
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($validateTarget);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 }

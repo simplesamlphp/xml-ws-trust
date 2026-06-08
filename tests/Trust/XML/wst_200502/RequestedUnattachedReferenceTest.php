@@ -71,9 +71,10 @@ final class RequestedUnattachedReferenceTest extends TestCase
 
         $requestedUnattachedReference = new RequestedUnattachedReference($securityTokenReference);
 
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($requestedUnattachedReference),
-        );
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($requestedUnattachedReference);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 }

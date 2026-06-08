@@ -60,9 +60,10 @@ final class ParticipantTest extends TestCase
 
         $participant = new Participant($msgId);
 
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($participant),
-        );
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($participant);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 }

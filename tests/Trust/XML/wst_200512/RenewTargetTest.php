@@ -62,9 +62,10 @@ final class RenewTargetTest extends TestCase
 
         $renewTarget = new RenewTarget($msgId);
 
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($renewTarget),
-        );
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($renewTarget);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 }

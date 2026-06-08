@@ -52,9 +52,10 @@ final class EncryptWithTest extends TestCase
     {
         $encryptWith = EncryptWith::fromString(C::NAMESPACE);
 
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($encryptWith),
-        );
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($encryptWith);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 }

@@ -63,9 +63,10 @@ final class BinaryExchangeTest extends TestCase
             [$attr1],
         );
 
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($binaryExchange),
-        );
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($binaryExchange);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 }
