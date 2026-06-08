@@ -51,9 +51,10 @@ final class DelegatableTest extends TestCase
     {
         $delegatable = Delegatable::fromString('true');
 
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($delegatable),
-        );
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($delegatable);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 }

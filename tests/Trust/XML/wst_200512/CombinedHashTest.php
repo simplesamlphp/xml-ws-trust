@@ -51,9 +51,10 @@ final class CombinedHashTest extends TestCase
     {
         $combinedHash = CombinedHash::fromString('/CTj03d1DB5e2t7CTo9BEzCf5S9NRzwnBgZRlm32REI=');
 
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($combinedHash),
-        );
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($combinedHash);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 }

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SimpleSAML\WebServices\Trust\XML\wst_200502;
 
-use DOMElement;
+use Dom;
 use SimpleSAML\WebServices\Trust\Assert\Assert;
 use SimpleSAML\XML\ExtendableAttributesTrait;
 use SimpleSAML\XML\TypedTextContentTrait;
@@ -75,7 +75,7 @@ abstract class AbstractBinaryExchangeType extends AbstractWstElement
      * @throws \SimpleSAML\XMLSchema\Exception\InvalidDOMElementException
      *   If the qualified name of the supplied element is wrong
      */
-    public static function fromXML(DOMElement $xml): static
+    public static function fromXML(Dom\Element $xml): static
     {
         Assert::same($xml->localName, static::getLocalName(), InvalidDOMElementException::class);
         Assert::same($xml->namespaceURI, static::NS, InvalidDOMElementException::class);
@@ -92,7 +92,7 @@ abstract class AbstractBinaryExchangeType extends AbstractWstElement
     /**
      * Convert this element to XML.
      */
-    public function toXML(?DOMElement $parent = null): DOMElement
+    public function toXML(?Dom\Element $parent = null): Dom\Element
     {
         $e = $this->instantiateParentElement($parent);
         $e->textContent = $this->getContent()->getValue();

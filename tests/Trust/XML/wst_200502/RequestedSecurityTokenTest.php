@@ -62,9 +62,10 @@ final class RequestedSecurityTokenTest extends TestCase
 
         $requestedSecurityToken = new RequestedSecurityToken($msgId);
 
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($requestedSecurityToken),
-        );
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($requestedSecurityToken);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 }

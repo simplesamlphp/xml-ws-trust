@@ -54,9 +54,10 @@ final class KeyTypeTest extends TestCase
     {
         $keyType = KeyType::fromString(KeyTypeEnum::PublicKey->value);
 
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($keyType),
-        );
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($keyType);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 }

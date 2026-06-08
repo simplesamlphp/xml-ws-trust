@@ -58,9 +58,10 @@ final class StatusTest extends TestCase
         $reason = Reason::fromString('phpunit');
         $status = new Status($code, $reason);
 
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($status),
-        );
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($status);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 }

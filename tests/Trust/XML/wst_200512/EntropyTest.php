@@ -66,10 +66,11 @@ final class EntropyTest extends TestCase
         $attr1 = new XMLAttribute(C::NAMESPACE, 'ssp', 'attr1', StringValue::fromString('testval1'));
         $entropy = new Entropy([$msgId], [$attr1]);
 
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($entropy),
-        );
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($entropy);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 
 

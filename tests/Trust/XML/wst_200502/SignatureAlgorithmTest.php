@@ -52,9 +52,10 @@ final class SignatureAlgorithmTest extends TestCase
     {
         $signatureAlgorithm = SignatureAlgorithm::fromString(C::NAMESPACE);
 
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($signatureAlgorithm),
-        );
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($signatureAlgorithm);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 }

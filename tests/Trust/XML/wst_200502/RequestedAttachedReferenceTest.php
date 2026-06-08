@@ -71,9 +71,10 @@ final class RequestedAttachedReferenceTest extends TestCase
 
         $requestedAttachedReference = new RequestedAttachedReference($securityTokenReference);
 
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($requestedAttachedReference),
-        );
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($requestedAttachedReference);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 }

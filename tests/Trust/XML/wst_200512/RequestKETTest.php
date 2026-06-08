@@ -51,21 +51,11 @@ final class RequestKETTest extends TestCase
     {
         $requestKET = new RequestKET();
 
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($requestKET),
-        );
-    }
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($requestKET);
 
-
-    /**
-     * Test creating an empty RequestKET object from scratch.
-     *
-     * NOTE: This element is empty per definition!
-     */
-    public function testMarshallingEmpty(): void
-    {
-        $requestKET = new RequestKET();
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
         $this->assertFalse($requestKET->isEmptyElement());
     }
 }
