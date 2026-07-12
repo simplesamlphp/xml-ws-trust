@@ -11,7 +11,7 @@ use SimpleSAML\XML\ExtendableElementTrait;
 use SimpleSAML\XMLSchema\Exception\InvalidDOMElementException;
 use SimpleSAML\XMLSchema\XML\Constants\NS;
 
-use function array_pop;
+use function array_last;
 
 /**
  * Class defining the SignChallengeType element
@@ -88,7 +88,7 @@ abstract class AbstractSignChallengeType extends AbstractWstElement
         $children = self::getChildElementsFromXML($xml);
 
         return new static(
-            array_pop($challenge),
+            array_last($challenge),
             $children,
             self::getAttributesNSFromXML($xml),
         );
