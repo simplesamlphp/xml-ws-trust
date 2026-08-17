@@ -13,6 +13,8 @@ use SimpleSAML\XMLSchema\Exception\TooManyElementsException;
 use SimpleSAML\XMLSchema\Type\AnyURIValue;
 use SimpleSAML\XMLSchema\XML\Constants\NS;
 
+use function array_last;
+
 /**
  * Class defining the UseKeyType element
  *
@@ -77,7 +79,7 @@ abstract class AbstractUseKeyType extends AbstractWstElement
         Assert::maxCount($children, 1, TooManyElementsException::class);
 
         return new static(
-            array_pop($children),
+            array_last($children),
             self::getOptionalAttribute($xml, 'Sig', AnyURIValue::class, null),
         );
     }

@@ -11,6 +11,8 @@ use SimpleSAML\WebServices\Trust\Assert\Assert;
 use SimpleSAML\XMLSchema\Exception\InvalidDOMElementException;
 use SimpleSAML\XMLSchema\Exception\TooManyElementsException;
 
+use function array_last;
+
 /**
  * Class defining the LifetimeType element
  *
@@ -78,8 +80,8 @@ abstract class AbstractLifetimeType extends AbstractWstElement
 
 
         return new static(
-            array_pop($created),
-            array_pop($expires),
+            array_last($created),
+            array_last($expires),
         );
     }
 

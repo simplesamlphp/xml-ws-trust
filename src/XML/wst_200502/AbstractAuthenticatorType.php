@@ -10,7 +10,7 @@ use SimpleSAML\XML\ExtendableElementTrait;
 use SimpleSAML\XMLSchema\Exception\InvalidDOMElementException;
 use SimpleSAML\XMLSchema\XML\Constants\NS;
 
-use function array_pop;
+use function array_last;
 
 /**
  * Class defining the AuthenticatorType element
@@ -73,7 +73,7 @@ abstract class AbstractAuthenticatorType extends AbstractWstElement
         $combinedHash = CombinedHash::getChildrenOfClass($xml);
 
         return new static(
-            array_pop($combinedHash),
+            array_last($combinedHash),
             self::getChildElementsFromXML($xml),
         );
     }

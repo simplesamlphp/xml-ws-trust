@@ -11,6 +11,8 @@ use SimpleSAML\XMLSchema\Exception\InvalidDOMElementException;
 use SimpleSAML\XMLSchema\Exception\TooManyElementsException;
 use SimpleSAML\XMLSchema\XML\Constants\NS;
 
+use function array_last;
+
 /**
  * Class defining the ParticipantsType element
  *
@@ -85,7 +87,7 @@ abstract class AbstractParticipantsType extends AbstractWstElement
         Assert::maxCount($primary, 1, TooManyElementsException::class);
 
         return new static(
-            array_pop($primary),
+            array_last($primary),
             Participant::getChildrenOfClass($xml),
             self::getChildElementsFromXML($xml),
         );

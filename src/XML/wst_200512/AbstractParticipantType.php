@@ -13,6 +13,8 @@ use SimpleSAML\XMLSchema\Exception\MissingElementException;
 use SimpleSAML\XMLSchema\Exception\TooManyElementsException;
 use SimpleSAML\XMLSchema\XML\Constants\NS;
 
+use function array_last;
+
 /**
  * Class defining the ParticipantType element
  *
@@ -55,7 +57,7 @@ abstract class AbstractParticipantType extends AbstractWstElement
         Assert::maxCount($children, 1, TooManyElementsException::class);
 
         return new static(
-            array_pop($children),
+            array_last($children),
         );
     }
 
