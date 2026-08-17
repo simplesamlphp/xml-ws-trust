@@ -51,21 +51,11 @@ final class RequestedTokenCancelledTest extends TestCase
     {
         $requestedTokenCancelled = new RequestedTokenCancelled();
 
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($requestedTokenCancelled),
-        );
-    }
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($requestedTokenCancelled);
 
-
-    /**
-     * Test creating an empty RequestedTokenCancelled object from scratch.
-     *
-     * NOTE: This element is empty per definition!
-     */
-    public function testMarshallingEmpty(): void
-    {
-        $requestedTokenCancelled = new RequestedTokenCancelled();
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
         $this->assertFalse($requestedTokenCancelled->isEmptyElement());
     }
 }

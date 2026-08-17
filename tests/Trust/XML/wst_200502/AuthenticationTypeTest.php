@@ -52,9 +52,10 @@ final class AuthenticationTypeTest extends TestCase
     {
         $authenticationType = AuthenticationType::fromString(C::NAMESPACE);
 
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($authenticationType),
-        );
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($authenticationType);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 }

@@ -52,9 +52,10 @@ final class ComputedKeyAlgorithmTest extends TestCase
     {
         $computedKeyAlgorithm = ComputedKeyAlgorithm::fromString(C::NAMESPACE);
 
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($computedKeyAlgorithm),
-        );
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($computedKeyAlgorithm);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 }

@@ -49,9 +49,10 @@ final class ReasonTest extends TestCase
     {
         $reason = Reason::fromString('phpunit');
 
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($reason),
-        );
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($reason);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 }

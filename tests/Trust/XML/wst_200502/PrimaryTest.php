@@ -60,9 +60,10 @@ final class PrimaryTest extends TestCase
 
         $primary = new Primary($msgId);
 
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($primary),
-        );
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($primary);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 }

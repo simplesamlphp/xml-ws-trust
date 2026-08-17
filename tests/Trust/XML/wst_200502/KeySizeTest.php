@@ -51,9 +51,10 @@ final class KeySizeTest extends TestCase
     {
         $keySize = KeySize::fromString('4096');
 
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($keySize),
-        );
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($keySize);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 }

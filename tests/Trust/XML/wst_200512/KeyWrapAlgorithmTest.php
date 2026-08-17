@@ -52,9 +52,10 @@ final class KeyWrapAlgorithmTest extends TestCase
     {
         $keyWrapAlgorithm = KeyWrapAlgorithm::fromString(C::NAMESPACE);
 
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($keyWrapAlgorithm),
-        );
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($keyWrapAlgorithm);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 }

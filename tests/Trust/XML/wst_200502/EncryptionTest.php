@@ -62,9 +62,10 @@ final class EncryptionTest extends TestCase
 
         $encryption = new Encryption($msgId);
 
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($encryption),
-        );
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($encryption);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 }

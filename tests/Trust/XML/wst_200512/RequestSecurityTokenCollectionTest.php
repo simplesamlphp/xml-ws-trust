@@ -78,9 +78,10 @@ final class RequestSecurityTokenCollectionTest extends TestCase
             $requestSecurityToken2,
         ]);
 
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($requestSecurityTokenCollection),
-        );
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($requestSecurityTokenCollection);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 }

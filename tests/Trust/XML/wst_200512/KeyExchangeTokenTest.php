@@ -62,10 +62,11 @@ final class KeyExchangeTokenTest extends TestCase
 
         $keyExchangeToken = new KeyExchangeToken([$msgId]);
 
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($keyExchangeToken),
-        );
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($keyExchangeToken);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 
 

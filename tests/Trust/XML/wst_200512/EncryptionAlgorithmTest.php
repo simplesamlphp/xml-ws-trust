@@ -52,9 +52,10 @@ final class EncryptionAlgorithmTest extends TestCase
     {
         $encryptionAlgorithm = EncryptionAlgorithm::fromString(C::NAMESPACE);
 
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($encryptionAlgorithm),
-        );
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($encryptionAlgorithm);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 }

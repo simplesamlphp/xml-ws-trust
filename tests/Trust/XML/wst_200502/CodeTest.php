@@ -52,9 +52,10 @@ final class CodeTest extends TestCase
     {
         $code = Code::fromString(StatusCodeEnum::Invalid->value);
 
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($code),
-        );
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($code);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 }

@@ -62,9 +62,10 @@ final class ProofEncryptionTest extends TestCase
 
         $proofEncryption = new ProofEncryption($msgId);
 
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($proofEncryption),
-        );
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($proofEncryption);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 }

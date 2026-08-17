@@ -62,9 +62,10 @@ final class DelegateToTest extends TestCase
 
         $delegateTo = new DelegateTo($msgId);
 
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($delegateTo),
-        );
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($delegateTo);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 }

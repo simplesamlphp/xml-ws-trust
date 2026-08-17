@@ -51,9 +51,10 @@ final class ChallengeTest extends TestCase
     {
         $challenge = Challenge::fromString('accepted');
 
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($challenge),
-        );
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($challenge);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 }

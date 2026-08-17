@@ -65,9 +65,10 @@ final class BinarySecretTest extends TestCase
             [$attr1],
         );
 
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($binarySecret),
-        );
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($binarySecret);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 }

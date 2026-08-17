@@ -52,9 +52,10 @@ final class SignWithTest extends TestCase
     {
         $signWith = SignWith::fromString(C::NAMESPACE);
 
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($signWith),
-        );
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($signWith);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 }

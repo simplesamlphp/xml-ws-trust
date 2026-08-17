@@ -54,9 +54,10 @@ final class ComputedKeyTest extends TestCase
     {
         $computedKey = ComputedKey::fromString(ComputedKeyEnum::PSHA1->value);
 
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($computedKey),
-        );
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($computedKey);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 }

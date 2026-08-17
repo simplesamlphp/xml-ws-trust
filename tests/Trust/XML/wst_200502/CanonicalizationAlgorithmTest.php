@@ -52,9 +52,10 @@ final class CanonicalizationAlgorithmTest extends TestCase
     {
         $canonicalizationAlgorithm = CanonicalizationAlgorithm::fromString(C::NAMESPACE);
 
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($canonicalizationAlgorithm),
-        );
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($canonicalizationAlgorithm);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 }

@@ -63,10 +63,11 @@ final class UseKeyTest extends TestCase
 
         $useKey = new UseKey($msgId, AnyURIValue::fromString(C::NAMESPACE));
 
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($useKey),
-        );
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($useKey);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 
 

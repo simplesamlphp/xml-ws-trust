@@ -58,10 +58,11 @@ final class LifetimeTest extends TestCase
         $expires = new Expires(DateTimeValue::fromString('2001-10-13T09:00:00Z'));
         $lifetime = new Lifetime($created, $expires);
 
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($lifetime),
-        );
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($lifetime);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 
 

@@ -69,9 +69,10 @@ final class SignChallengeResponseTest extends TestCase
 
         $signChallengeResponse = new SignChallengeResponse($challenge, [$msgId], [$attr1]);
 
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($signChallengeResponse),
-        );
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($signChallengeResponse);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 }

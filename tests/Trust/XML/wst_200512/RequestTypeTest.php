@@ -55,9 +55,10 @@ final class RequestTypeTest extends TestCase
     {
         $requestType = new RequestType(AnyURIValue::fromString(RequestTypeEnum::Issue->value));
 
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($requestType),
-        );
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($requestType);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 }
